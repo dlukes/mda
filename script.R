@@ -45,6 +45,11 @@ fit <- factanal(select(res.data, -NN), factors=7, rotation="promax", trace=T)
 
 ## Features which cause linear dependence between columns
 
+is.fullrank(res.data)
+# FALSE
+is.fullrank(select(res.data, -NN))
+# FALSE
+
 lin_dep_feats <- function(data, proportion=.75, n=10000) {
   col_tot <- ncol(data)
   col_sel <- col_tot * proportion
@@ -60,8 +65,6 @@ lin_dep_feats <- function(data, proportion=.75, n=10000) {
   sort(feat_scores, decreasing=TRUE)
 }
 
-is.fullrank(res.data)
-# FALSE
 ld_feats <- lin_dep_feats(res.data)
 head(ld_feats)
 #   WL   TC NEG1 COH1  NNV VTE1
